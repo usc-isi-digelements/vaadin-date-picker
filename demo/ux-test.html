@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../sugar/dist/sugar.min.js"></script>
+    <link rel="import" href="../vaadin-date-picker.html">
+    <link rel="import" href="../../paper-input/paper-input.html">
+    <style media="screen">
+      body {
+        background: #fafafa;
+      }
+    </style>
+  </head>
+  <body>
+    <ux-test></ux-test>
+
+    <dom-module id="ux-test">
+      <template>
+        <style>
+          :host {
+            display: block;
+          }
+          fieldset {
+            background: #fff;
+            margin: 50px auto;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 500px;
+            background-color: white;
+          }
+
+          #signature {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            border-top: 2px solid #ddd;
+          }
+
+          #user {
+            border-color: #00b4f0;
+          }
+
+          #user-button {
+            background: #00b4f0;
+            color: white;
+          }
+
+          .user {
+            --primary-color: #00b4f0;
+          }
+
+          #flight {
+            border-color: #9C27B0;
+          }
+
+          #flight-button {
+            background: #9C27B0;
+            color: white;
+          }
+
+          .flight {
+            --primary-color: #9C27B0;
+          }
+
+          #flight > paper-input, #flight > vaadin-date-picker {
+            width: 49%;
+            display: inline-block;
+          }
+
+          #weeknumbers {
+            margin-top: -30px;
+          }
+
+          paper-button {
+            float: right;
+            margin-top: 8px;
+          }
+        </style>
+
+        <fieldset id="signature">
+          <legend>Date-picker</legend>
+          <vaadin-date-picker id="weeknumbers" show-week-numbers max="2016-12-31"></vaadin-date-picker>
+        </fieldset>
+
+        <fieldset id="flight">
+          <legend>Cheap flights</legend>
+          <paper-input class="flight" label="From" value="Turku (TKU)"></paper-input>
+          <paper-input class="flight" label="To" value="Gdansk (GDN)"></paper-input>
+          <vaadin-date-picker class="flight" label="Depart" value="{{startValue}}" max="{{endValue}}" initial-position="{{endValue}}"></vaadin-date-picker>
+          <vaadin-date-picker class="flight" label="Return" value="{{endValue}}" min="{{startValue}}" initial-position="{{startValue}}"></vaadin-date-picker>
+          <paper-button raised id="flight-button">Search Flights</paper-button>
+        </fieldset>
+
+        <fieldset id="user">
+          <legend>User Settings</legend>
+          <paper-input class="user" label="Name"></paper-input>
+          <paper-input class="user" label="Employer"></paper-input>
+          <vaadin-date-picker class="user" label="Starting date" id="userdate"></vaadin-date-picker>
+          <paper-button raised id="user-button">Submit</paper-button>
+        </fieldset>
+
+      </template>
+      <script>
+        Polymer({
+          is: 'ux-test',
+
+          ready: function() {
+            this.$.weeknumbers.set('i18n.firstDayOfWeek', 1);
+
+            this.$.userdate.set('i18n.parseDate', function(dateString) {
+              // See if we get exactly 1 match from the month names
+              var matches = this.$.userdate.i18n.monthNames.filter(function(monthName) {
+                return monthName.toLowerCase().startsWith(dateString.trim().toLowerCase());
+              });
+              dateString = matches.length === 1 ? matches[0] : dateString;
+              // Parse the date (using a 3rd party library)
+              return Sugar.Date.create(dateString);
+            }.bind(this));
+          }
+        });
+      </script>
+    </dom-module>
+  </body>
+</html>
