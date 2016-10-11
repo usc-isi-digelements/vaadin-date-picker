@@ -103,6 +103,7 @@
 
       </template>
       <script>
+      HTMLImports.whenReady(function () {
         Polymer({
           is: 'ux-test',
 
@@ -120,6 +121,7 @@
             }.bind(this));
           }
         });
+      });
       </script>
     </dom-module>
   </body>
