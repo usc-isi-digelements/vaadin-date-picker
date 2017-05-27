@@ -116,7 +116,7 @@
         });
 
         it('should select focused date on enter', done => {
-          datepicker.addEventListener('iron-overlay-closed', () => {
+          listenForEvent(datepicker, 'iron-overlay-closed', () => {
             expect(datepicker.value).to.equal('2001-01-01');
             done();
           });
@@ -134,7 +134,7 @@
         it('should not forward keys after close', done => {
           inputText('1/2/2000');
           arrowDown();
-          datepicker.addEventListener('iron-overlay-closed', () => {
+          listenForEvent(datepicker, 'iron-overlay-closed', () => {
             var focused = focusedDate();
             arrowRight();
             expect(focusedDate()).to.eql(focused);
@@ -151,18 +151,18 @@
         it('should not forward keys after reopen', done => {
           inputText('1/2/2000');
           arrowDown();
-          datepicker.addEventListener('iron-overlay-opened', () => {
+          listenForEvent(datepicker, 'iron-overlay-opened', () => {
             var focused = focusedDate();
             arrowRight();
             expect(focusedDate()).to.eql(focused);
             done();
           });
-          datepicker.addEventListener('iron-overlay-closed', () => inputText('0'));
+          listenForEvent(datepicker, 'iron-overlay-closed', () => inputText('0'));
           enter();
         });
 
         it('should not forward after user changes input', done => {
-          datepicker.addEventListener('iron-overlay-opened', () => {
+          listenForEvent(datepicker, 'iron-overlay-opened', () => {
             arrowDown();
             // Forwarding keys to overlay
             target.value = '';
@@ -190,7 +190,7 @@
         it('should reflect focused date to input', done => {
           datepicker.value = '2000-01-01';
 
-          datepicker.addEventListener('iron-overlay-opened', () => {
+          listenForEvent(datepicker, 'iron-overlay-opened', () => {
             arrowDown();
             expect(datepicker._inputValue).to.equal('1/8/2000');
             done();
@@ -200,7 +200,7 @@
 
         it('should not reflect focused date on open', done => {
 
-          datepicker.addEventListener('iron-overlay-opened', () => {
+          listenForEvent(datepicker, 'iron-overlay-opened', () => {
             expect(datepicker._inputValue).to.equal('');
             done();
           });
@@ -210,7 +210,7 @@
         it('should stop key event bubbles from overlay', done => {
           datepicker.value = '2000-01-01';
 
-          datepicker.addEventListener('iron-overlay-opened', () => {
+          listenForEvent(datepicker, 'iron-overlay-opened', () => {
             arrowDown();
             target = overlay;
             arrowDown();
@@ -232,7 +232,7 @@
           open(datepicker, () => {
             var spy = sinon.spy(datepicker, 'validate');
 
-            datepicker.addEventListener('iron-overlay-closed', () => {
+            listenForEvent(datepicker, 'iron-overlay-closed', () => {
               expect(spy.called).to.be.true;
               done();
             });
@@ -245,7 +245,7 @@
           datepicker.value = '2000-01-01';
           target.value = '';
           inputText('foo');
-          datepicker.addEventListener('iron-overlay-closed', () => {
+          listenForEvent(datepicker, 'iron-overlay-closed', () => {
             expect(datepicker.value).to.equal('');
             done();
           });
@@ -256,7 +256,7 @@
           datepicker.value = '2000-01-01';
           target.value = '';
           inputText('foo');
-          datepicker.addEventListener('iron-overlay-closed', () => {
+          listenForEvent(datepicker, 'iron-overlay-closed', () => {
             expect(datepicker.invalid).to.be.true;
             done();
           });
@@ -264,7 +264,7 @@
         });
 
         it('should clear selection on close', done => {
-          datepicker.addEventListener('iron-overlay-closed', () => {
+          listenForEvent(datepicker, 'iron-overlay-closed', () => {
             expect(target.selectionStart).to.equal(target.selectionEnd);
             done();
           });
@@ -293,7 +293,7 @@
           });
 
           it('should select focused date on close', done => {
-            datepicker.addEventListener('iron-overlay-closed', () => {
+            listenForEvent(datepicker, 'iron-overlay-closed', () => {
               expect(datepicker._selectedDate).to.equal(datepicker._focusedDate);
               done();
             });
@@ -304,7 +304,7 @@
         });
 
         it('should not forward up/down to overlay when closed', done => {
-          datepicker.addEventListener('iron-overlay-opened', () => {
+          listenForEvent(datepicker, 'iron-overlay-opened', () => {
             expect(datepicker._focusedDate.getDate()).to.eql(new Date().getDate());
             done();
           });
@@ -322,7 +322,7 @@
         describe('esc behavior', () => {
 
           it('should close the overlay on esc', done => {
-            datepicker.addEventListener('iron-overlay-closed', () => done());
+            listenForEvent(datepicker, 'iron-overlay-closed', () => done());
             open(datepicker, esc);
           });
 
@@ -352,7 +352,7 @@
 
           it('should not change value on esc', done => {
             datepicker.value = '2000-01-01';
-            datepicker.addEventListener('iron-overlay-closed', () => {
+            listenForEvent(datepicker, 'iron-overlay-closed', () => {
               expect(datepicker.value).to.equal('2000-01-01');
               done();
             });
@@ -366,7 +366,7 @@
 
           it('should not change value on esc (empty)', done => {
             datepicker.value = '';
-            datepicker.addEventListener('iron-overlay-closed', () => {
+            listenForEvent(datepicker, 'iron-overlay-closed', () => {
               expect(datepicker.value).to.equal('');
               done();
             });

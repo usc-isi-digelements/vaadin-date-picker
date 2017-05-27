@@ -39,16 +39,19 @@
         expect(datepicker.$.dropdown.opened).to.be.true;
       });
 
-      it('should open calendar on input', done => {
-        var target = datepicker._inputElement;
-        target.value = '1';
-        datepicker._nativeInput.dispatchEvent(new CustomEvent('input', {bubbles: true}));
 
-        listenForEvent(datepicker, 'iron-overlay-opened', () => {
-          expect(datepicker.$.dropdown.opened).to.be.true;
-          done();
+      if (!ios) {
+        it('should open calendar on input', done => {
+          var target = datepicker._inputElement;
+          target.value = '1';
+          datepicker._nativeInput.dispatchEvent(new CustomEvent('input', {bubbles: true}));
+
+          listenForEvent(datepicker, 'iron-overlay-opened', () => {
+            expect(datepicker.$.dropdown.opened).to.be.true;
+            done();
+          });
         });
-      });
+      }
 
       it('should not auto focus overlay', () => {
         expect(datepicker.$.dropdown.noAutoFocus).to.equal(true);

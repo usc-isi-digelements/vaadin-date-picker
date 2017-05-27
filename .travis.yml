@@ -34,12 +34,12 @@ script:
       test/dropdown.html
       test/overlay.html
       test/month-calendar.html
-      test/scroller.html
   - eval $run
-      test/form-input.html
       test/custom-input.html
       test/late-upgrade.html
       test/wai-aria.html
+      test/form-input.html
   - eval $run
+      test/scroller.html
       test/keyboard-navigation.html
       test/keyboard-input.html

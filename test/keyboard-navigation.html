@@ -111,13 +111,12 @@
           });
 
           it('should close overlay on esc', done => {
-            datepicker.open();
-            target = datepicker.$.overlay;
-            setTimeout(() => {
+            open(datepicker, () => {
+              target = datepicker.$.overlay;
               esc();
               expect(datepicker.opened).to.be.false;
               done();
-            }, 1);
+            });
           });
 
           it('should be focused on selected value when overlay is opened', () => {

@@ -39,6 +39,9 @@
 
   <script>
     describe('Dropdown', () => {
+
+      if(ios) return;
+
       var datepicker;
       var dropdown;
 
@@ -52,48 +55,44 @@
       it('should set body `pointer-events: none` on open and restore initial value on close', done => {
         document.body.style.pointerEvents = 'painted';
 
-        datepicker.addEventListener('iron-overlay-opened', () => {
+        open(datepicker, () => {
           expect(getComputedStyle(document.body).pointerEvents).to.be.equal('none');
           expect(getComputedStyle(datepicker).pointerEvents).to.be.equal('auto');
-          datepicker._close();
-        });
 
-        datepicker.addEventListener('iron-overlay-closed', () => {
-          expect(getComputedStyle(document.body).pointerEvents).to.be.equal('painted');
-          done();
+          close(datepicker, () => {
+            expect(getComputedStyle(document.body).pointerEvents).to.be.equal('painted');
+            done();
+          });
         });
-
-        datepicker.open();
       });
 
       it('should not close on calendar icon down', done => {
-        datepicker.addEventListener('iron-overlay-opened', () => {
+        open(datepicker, () => {
           MockInteractions.down(datepicker.$.calendar);
           expect(datepicker.$.dropdown.opened).to.be.true;
-
           done();
         });
-        datepicker.open();
       });
 
       if (document.createElement('div').style.webkitOverflowScrolling === '') {
         it('should handle webkit-overflow-scrolling', done => {
           document.body.style.webkitOverflowScrolling = 'touch';
 
-          datepicker.addEventListener('iron-overlay-opened', () => {
+          open(datepicker, () => {
             expect(window.getComputedStyle(document.body).webkitOverflowScrolling).to.equal('auto');
-            datepicker.close();
-          });
 
-          datepicker.addEventListener('iron-overlay-closed', () => {
-            expect(window.getComputedStyle(document.body).webkitOverflowScrolling).to.equal('touch');
-            done();
+            close(datepicker, () => {
+              expect(window.getComputedStyle(document.body).webkitOverflowScrolling).to.equal('touch');
+              done();
+            });
           });
-          datepicker.open();
         });
       }
 
       describe('Sizing', () => {
+        if (ios) {
+          return;
+        }
 
         beforeEach(() => {
           var viewport = document.createElement('meta');
@@ -105,7 +104,7 @@
         });
 
         it('should select fullscreen/desktop mode', done => {
-          datepicker.addEventListener('iron-overlay-opened', () => {
+          open(datepicker, () => {
             var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
             var fullscreen = viewportWidth < 520;
 
@@ -114,43 +113,45 @@
             expect(dropdown.positionTarget).to.equal(fullscreen ? document.documentElement : datepicker);
             done();
           });
-          setTimeout(() => {
-            datepicker.open();
-          });
         });
 
       });
 
       describe('Alignment', () => {
+        if (ios) {
+          return;
+        }
 
         beforeEach(() => document.body.style.padding = '500px');
 
         it('should align top/left', done => {
           datepicker.style.left = '0';
           datepicker.style.top = '0';
-          datepicker.addEventListener('iron-overlay-opened', () => {
+          open(datepicker, () => {
             expect(dropdown.verticalAlign).to.equal('top');
             expect(dropdown.horizontalAlign).to.equal('left');
             done();
           });
-          datepicker.open();
         });
 
         it('should align borrom/right', done => {
           datepicker.style.right = '0';
           datepicker.style.bottom = '0';
-          datepicker.addEventListener('iron-overlay-opened', () => {
+          open(datepicker, () => {
             expect(datepicker.$.dropdown.verticalAlign).to.equal('bottom');
             expect(datepicker.$.dropdown.horizontalAlign).to.equal('right');
             done();
           });
-          datepicker.open();
         });
 
       });
     });
 
     describe('Dropdown-wrapped', () => {
+      if (ios) {
+        return;
+      }
+
       var datepicker;
 
       beforeEach(() => datepicker = fixture('datepicker-wrapped').$.datepicker);
@@ -160,13 +161,11 @@
       });
 
       it('should not close on calendar icon down', done => {
-        datepicker.addEventListener('iron-overlay-opened', () => {
+        open(datepicker, () => {
           MockInteractions.down(datepicker.$.calendar);
           expect(datepicker.$.dropdown.opened).to.be.true;
-
           done();
         });
-        datepicker.open();
       });
 
     });
