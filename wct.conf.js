@@ -1,13 +1,15 @@
 module.exports = {
   registerHooks: function(context) {
     context.options.plugins.sauce.browsers = [
+      // 'OS X 10.12/iphone@10.3',
       'OS X 10.11/iphone@10.2',
+      // 'OS 10.12/ipad@10.3',
       // 'OS X 10.11/ipad@10.2',
-      'Windows 10/internet explorer@11',
-      'Windows 10/chrome@58',
-      'Windows 10/firefox@53',
-      'Windows 10/microsoftedge@14',
-      'OS X 10.11/safari@10.0'
+      // 'Windows 10/internet explorer@11',
+      // 'Windows 10/chrome@58',
+      // 'Windows 10/firefox@53',
+      // 'Windows 10/microsoftedge@14',
+      // 'OS X 10.11/safari@10.0'
     ];
   },
 

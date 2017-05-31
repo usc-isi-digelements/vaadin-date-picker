@@ -42,9 +42,7 @@
         datepicker = fixture('datepicker');
       });
 
-      afterEach(done => {
-        setTimeout(done, 1);
-      });
+      afterEach(done => flush(done));
 
       it('should have default value', () => {
         expect(datepicker.value).to.equal('');

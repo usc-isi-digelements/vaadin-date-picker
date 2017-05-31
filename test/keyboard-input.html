@@ -83,10 +83,11 @@
           setTimeout(done, 1);
         });
 
-        afterEach(() => {
+        afterEach(done => {
           if (datepicker._debouncerRefit) {
             datepicker._debouncerRefit.flush();
           }
+          flush(done);
         });
 
         it('should open overlay on input', () => {

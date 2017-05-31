@@ -82,18 +82,19 @@
           return overlay.focusedDate;
         }
 
+        afterEach(done => {
+          if (datepicker._debouncerRefit) {
+            datepicker._debouncerRefit.flush();
+          }
+          flush(done);
+        });
+
         describe('date-picker', () => {
           var datepicker;
 
           beforeEach(() => {
             datepicker = fixture('datepicker');
             overlay = datepicker.$.overlay;
-          });
-
-          afterEach(() => {
-            if (datepicker._debouncerRefit) {
-              datepicker._debouncerRefit.flush();
-            }
           });
 
           it('should open overlay on down', () => {

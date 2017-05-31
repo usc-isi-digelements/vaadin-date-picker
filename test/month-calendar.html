@@ -35,6 +35,8 @@
         setTimeout(done);
       });
 
+      afterEach(done => flush(done));
+
       // A helper for async test functions for 2016 month rendering.
       function createMonthTest(monthNumber) {
         var expectedDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];

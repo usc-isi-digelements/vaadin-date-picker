@@ -33,6 +33,8 @@
         setTimeout(done);
       });
 
+      afterEach(done => flush(done));
+
       it('should open calendar on tap', () => {
         // mock-interactions tap does not work in mobile devices
         tap(datepicker);

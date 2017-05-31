@@ -52,6 +52,8 @@
           datepicker = fixture('datepicker');
         });
 
+        afterEach(done => flush(done));
+
         it('should have application role on input container', () => {
           // Makes JAWS not to intercept arrow keys but pass them to the browser
           // instead. Otherwise, the keyboard navigation is broken with JAWS.

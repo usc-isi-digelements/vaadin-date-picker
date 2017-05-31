@@ -50,7 +50,7 @@
         dropdown = datepicker.$.dropdown;
       });
 
-      afterEach(done => setTimeout(done, 1));
+      afterEach(done => flush(done));
 
       it('should set body `pointer-events: none` on open and restore initial value on close', done => {
         document.body.style.pointerEvents = 'painted';

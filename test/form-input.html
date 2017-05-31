@@ -62,6 +62,8 @@
         setTimeout(done);
       });
 
+      afterEach(done => flush(done));
+
       it('should have the given name', () => {
         datepicker.name = 'foo';
         expect(datepicker._inputElement.name).to.equal('foo');

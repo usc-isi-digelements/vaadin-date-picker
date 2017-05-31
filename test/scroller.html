@@ -32,6 +32,8 @@
         scroller.active = true;
       });
 
+      afterEach(done => flush(done));
+
       function verifyPosition() {
         var item = getFirstVisibleItem(scroller);
         expect(item.textContent - scroller.position).to.be.below(1);
